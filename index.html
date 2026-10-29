@@ -3,150 +3,140 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vulnerability Disclosure Case Tracker</title>
+<title>Smart Home Risk Checker</title>
 <style>
-:root{--bg:#f3f4fa;--surface:#fff;--ink:#1b2150;--muted:#555b82;--line:#d6d9ec;--accent:#3340b8;--ok:#1f6b35;--okb:#dcf1e0;--warn:#8a5a00;--warnb:#fff0cc;--bad:#b3261e;--badb:#fbe3e0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10142e;--surface:#1a2046;--ink:#e8eafc;--muted:#a3a9d6;--line:#2f3768;--accent:#9aa6ff;--ok:#8fdba3;--okb:#17381f;--warn:#f2c15e;--warnb:#4a3a10;--bad:#ff9a92;--badb:#4a1f1c}}
-:root[data-theme="dark"]{--bg:#10142e;--surface:#1a2046;--ink:#e8eafc;--muted:#a3a9d6;--line:#2f3768;--accent:#9aa6ff;--ok:#8fdba3;--okb:#17381f;--warn:#f2c15e;--warnb:#4a3a10;--bad:#ff9a92;--badb:#4a1f1c}
+:root{--bg:#eef3f0;--surface:#fff;--ink:#12302f;--muted:#4f6663;--line:#cfdcd7;--accent:#0f6b66;--hi:#b3261e;--hib:#fbe3e0;--me:#8a5a00;--meb:#fff0cc;--lo:#1f6b35;--lob:#dcf1e0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a19;--surface:#162826;--ink:#e6f1ee;--muted:#9bb5b0;--line:#2a403d;--accent:#5cc8bf;--hi:#ff9a92;--hib:#4a1f1c;--me:#f2c15e;--meb:#4a3a10;--lo:#8fdba3;--lob:#17381f}}
+:root[data-theme="dark"]{--bg:#0e1a19;--surface:#162826;--ink:#e6f1ee;--muted:#9bb5b0;--line:#2a403d;--accent:#5cc8bf;--hi:#ff9a92;--hib:#4a1f1c;--me:#f2c15e;--meb:#4a3a10;--lo:#8fdba3;--lob:#17381f}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header,main{max-width:1050px;margin:auto;padding:0 20px}
-header{padding-top:28px}
-h1{font:700 clamp(26px,4vw,36px)/1.15 Georgia,"Iowan Old Style",Palatino,serif;margin:0 0 6px}
-header p{margin:0 0 14px;color:var(--muted);max-width:64ch}
-h2{font:700 19px Georgia,serif;margin:0 0 10px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-label.f{display:block;font-size:14px;color:var(--muted);font-weight:600}
-input,select,textarea{font:inherit;width:100%;margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
-input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.steps{display:flex;gap:6px;flex-wrap:wrap;list-style:none;padding:0;margin:0 0 12px}
-.steps button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:7px 10px;font:inherit;font-size:14px;cursor:pointer}
-.steps .done{background:var(--okb);color:var(--ok);border-color:var(--ok)}
-.steps .cur{background:var(--accent);color:var(--surface);border-color:var(--accent);font-weight:700}
+header{padding:28px 20px 8px;max-width:1100px;margin:auto}
+h1{font:700 clamp(26px,4vw,38px)/1.15 Georgia,"Iowan Old Style",Palatino,serif;margin:0 0 6px}
+header p{margin:0;color:var(--muted);max-width:62ch}
+main{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;max-width:1100px;margin:auto;padding:16px 20px 40px}
+@media(max-width:820px){main{grid-template-columns:1fr}}
+fieldset{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:0 0 14px;padding:12px 16px 6px}
+legend{font:700 18px Georgia,serif;padding:0 6px}
+label{display:grid;grid-template-columns:22px 1fr;gap:10px;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
+label:first-of-type{border-top:0}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent);margin-top:2px}
+input:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.t{font-weight:600}.w{display:block;color:var(--muted);font-size:14px}
+.chip{font-size:12px;font-weight:700;border-radius:99px;padding:1px 8px;margin-left:6px;border:1px solid currentColor;white-space:nowrap}
+.Critical{color:var(--hi)}.High{color:var(--me)}.Medium{color:var(--accent)}.Low{color:var(--muted)}
+aside{position:sticky;top:12px;align-self:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+@media(max-width:820px){aside{position:static}}
+h2{font:700 20px Georgia,serif;margin:0 0 10px}
 table{width:100%;border-collapse:collapse;font-size:15px}
-.tw{overflow-x:auto}
-th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-size:13px;color:var(--muted)}
-.s{font-weight:700;border-radius:6px;padding:2px 8px;display:inline-block;white-space:nowrap;font-size:13px}
-.Done{background:var(--okb);color:var(--ok)}.Soon{background:var(--warnb);color:var(--warn)}.Overdue{background:var(--badb);color:var(--bad)}.Upcoming{background:var(--line);color:var(--muted)}
-button.p{font:inherit;font-weight:600;border:1px solid var(--accent);background:var(--accent);color:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;margin:8px 8px 0 0}
-button.g{font:inherit;font-weight:600;border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:8px;padding:8px 14px;cursor:pointer;margin:8px 8px 0 0}
-textarea{min-height:170px;line-height:1.5}
-.v{padding:10px 12px;border-radius:8px;margin-top:10px;font-weight:600}
-.v.ok{background:var(--okb);color:var(--ok)}.v.no{background:var(--badb);color:var(--bad)}
-.note{color:var(--muted);font-size:14px;margin:6px 0 0}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:13px;color:var(--muted);font-weight:600}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.badge{font-weight:700;border-radius:6px;padding:2px 9px;display:inline-block}
+.High-r{background:var(--hib);color:var(--hi)}.Medium-r{background:var(--meb);color:var(--me)}.Low-r{background:var(--lob);color:var(--lo)}
+ol{padding-left:20px;margin:8px 0 14px}li{margin-bottom:6px}li small{color:var(--muted)}
+button{font:inherit;font-weight:600;border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:8px;padding:7px 14px;cursor:pointer}
+.sc{font-size:14px;color:var(--muted);margin:0 0 10px}
 </style>
 </head>
 <body>
 <header>
-<h1>Vulnerability Disclosure Case Tracker</h1>
-<p>Enter a report, pick a severity, and the tracker builds the deadlines, shows who owns each stage, drafts the researcher message, and checks whether further testing is allowed. Targets are proposed values from the assignment, not legal requirements.</p>
+<h1>Smart Home Risk Checker</h1>
+<p>Tick each protection the family has already set up. The risk matrix and the to-do list update straight away. Ratings are a simple estimate based on unmet protections, not a security audit.</p>
 </header>
 <main>
-<section class="card" aria-label="Case details">
-<h2>Case details</h2>
-<div class="grid">
-<label class="f">Report title<input id="title" value="Reflected XSS on customer portal login"></label>
-<label class="f">Researcher name<input id="who" value="Researcher"></label>
-<label class="f">Severity<select id="sev"><option>Critical</option><option selected>High</option><option>Medium</option><option>Low</option></select></label>
-<label class="f">Date received<input id="recv" type="date"></label>
-<label class="f">Today (for status)<input id="today" type="date"></label>
-</div>
-</section>
-
-<section class="card" aria-label="Workflow">
-<h2>Workflow stage</h2>
-<ol class="steps" id="steps"></ol>
-<div id="owner" class="note"></div>
-<div class="tw"><table><thead><tr><th>Stage</th><th>Owner</th><th>Due</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div>
-<p class="note" id="upd"></p>
-</section>
-
-<section class="card" aria-label="Message draft">
-<h2>Message to the researcher</h2>
-<textarea id="msg" aria-label="Draft message"></textarea>
-<button class="g" id="copy" type="button">Copy message</button> <span class="note" id="cp"></span>
-</section>
-
-<section class="card" aria-label="Testing boundaries">
-<h2>Is this testing allowed?</h2>
-<label class="f">Researcher wants to
-<select id="act"></select></label>
-<div id="verdict" class="v"></div>
-<p class="note" id="reply"></p>
-</section>
+<section id="groups" aria-label="Protections checklist"></section>
+<aside aria-live="polite">
+<h2>Device-risk matrix</h2>
+<p class="sc" id="overall"></p>
+<table><thead><tr><th>Device</th><th>Protected</th><th>Risk</th></tr></thead><tbody id="rows"></tbody></table>
+<h2 style="margin-top:18px">Do these next</h2>
+<ol id="todo"></ol>
+<button id="reset" type="button">Clear all ticks</button>
+</aside>
 </main>
 <script>
-var STAGES=[
-{n:"Receive and log",o:"Intake Owner",d:function(r){return r}},
-{n:"Acknowledge",o:"Disclosure Coordinator",d:function(r){return bd(r,2)}},
-{n:"Triage and assess",o:"Triage Analyst",d:function(r){return add(r,7)}},
-{n:"Prioritize",o:"Coordinator and Executive Sponsor",d:function(r){return add(r,7)}},
-{n:"Remediate",o:"Engineering Owner and QA",d:function(r,s){return add(r,{Critical:14,High:30,Medium:60,Low:90}[s])}},
-{n:"Communicate and disclose",o:"Coordinator, Legal and Communications",d:function(r){return add(r,90)}},
-{n:"Review and close",o:"Coordinator",d:function(r){return add(r,120)}}];
-var ACT=[
-["Test only on in-scope systems with their own test account",1,"Thank you. That is within our policy."],
-["Use a harmless proof of concept, then stop",1,"Thank you. Please send the steps and stop testing once confirmed."],
-["Report extra findings in the same product",1,"Welcome. Please send them as separate cases if they are unrelated."],
-["Access or download other customers’ data",0,"Please stop, do not keep any data, and tell us what you saw. We will review the data impact with our privacy team."],
-["Run a denial-of-service or load test",0,"Please stop. Testing that affects availability is outside our policy."],
-["Phish employees or customers",0,"Social engineering is outside our policy. Please stop and keep to the technical report."],
-["Install a backdoor or move to other systems",0,"Please stop and remove any access. Persistence and lateral movement are not allowed."],
-["Test a third-party service we do not own",0,"That system is out of scope. We can contact the vendor for you."],
-["Publish details before the agreed date",0,"Please hold publication. We will share a fix date and agree a disclosure date with you."],
-["Ask for payment in return for silence",0,"We cannot accept payment as a condition for non-disclosure. We are escalating this to Legal for advice."]];
-function pd(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2])}
-function iso(d){var m=d.getMonth()+1,x=d.getDate();return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(x<10?"0":"")+x}
-function add(s,n){var d=pd(s);d.setDate(d.getDate()+n);return iso(d)}
-function bd(s,n){var d=pd(s);while(n>0){d.setDate(d.getDate()+1);var w=d.getDay();if(w!==0&&w!==6)n--}return iso(d)}
-function $(i){return document.getElementById(i)}
-var cur=1;
-var t=iso(new Date());$("today").value=t;$("recv").value=t;
-ACT.forEach(function(a,i){var o=document.createElement("option");o.value=i;o.textContent=a[0];$("act").appendChild(o)});
-function msgFor(){
- var r=$("who").value||"Researcher",ti=$("title").value,sv=$("sev").value,rc=$("recv").value;
- var id="SEC-0001";
- var T=[
- "Case "+id+" has been logged for “"+ti+"”. Our team is handling it in confidence.",
- "Hello "+r+",\n\nThank you for reporting “"+ti+"”. We have received your report and logged it as case "+id+". Our coordinator will be your contact.\n\nWe will send our first assessment by "+STAGES[2].d(rc,sv)+". Please keep the details private while we investigate, test only with your own accounts, do not access other people’s data, and stop once the issue is confirmed.\n\nThank you for helping us improve our security.",
- "Hello "+r+",\n\nWe reproduced the issue and rated it "+sv+". We are planning a fix and will update you by "+add($("today").value,sv==="Critical"?7:14)+".\n\nIf you have more details or a proof of concept, please send them to this case.",
- "Hello "+r+",\n\nThe "+sv+" issue is now prioritised with a fix target of "+STAGES[4].d(rc,sv)+". Next update by "+add($("today").value,sv==="Critical"?7:14)+". We would like to agree a disclosure date with you.",
- "Hello "+r+",\n\nOur fix for “"+ti+"” is in progress. The target date is "+STAGES[4].d(rc,sv)+". We will contact you before then if the date changes. We would be glad to let you verify the fix privately.",
- "Hello "+r+",\n\nThe fix is released. We propose publishing our advisory on "+STAGES[5].d(rc,sv)+" and crediting you if you wish. You are welcome to publish your own write-up after the advisory.",
- "Hello "+r+",\n\nThis case is now closed. Thank you for your responsible reporting. We have updated our tests and processes based on your finding."];
- return T[cur];
-}
-function render(){
- var rc=$("recv").value,sv=$("sev").value,td=$("today").value;
- var ul=$("steps");ul.innerHTML="";
- STAGES.forEach(function(s,i){var li=document.createElement("li");var b=document.createElement("button");b.type="button";b.textContent=(i+1)+". "+s.n;b.className=i<cur?"done":i===cur?"cur":"";if(i===cur)b.setAttribute("aria-current","step");b.addEventListener("click",function(){cur=i;render()});li.appendChild(b);ul.appendChild(li)});
- $("owner").textContent="Current owner: "+STAGES[cur].o+".";
- var tb=$("rows");tb.innerHTML="";
- STAGES.forEach(function(s,i){
-  var due=s.d(rc,sv),st;
-  if(i<cur)st="Done";else if(due<td)st="Overdue";else if(due<=add(td,3))st="Soon";else st="Upcoming";
-  var tr=document.createElement("tr");
-  [s.n,s.o,due].forEach(function(x){var c=document.createElement("td");c.textContent=x;tr.appendChild(c)});
-  var c=document.createElement("td");var sp=document.createElement("span");sp.className="s "+st;sp.textContent=st==="Soon"?"Due soon":st;c.appendChild(sp);tr.appendChild(c);tb.appendChild(tr);
+var W={Critical:4,High:3,Medium:2,Low:1};
+var G=[
+{n:"Smart camera",c:[
+["Unique strong password set (not the default)","Critical","Default and reused passwords are the easiest way into a camera account."],
+["Multi-factor authentication turned on","Critical","Stops a stolen password from giving access to live video."],
+["Automatic firmware updates enabled","High","Updates close known vulnerabilities."],
+["Not placed in bedrooms or bathrooms","High","Video of private rooms is the most damaging data to lose."],
+["Privacy mode or schedule set for when the family is home","High","Less recording means less footage that can leak."],
+["Update support period checked on the maker’s site","High","Unsupported devices collect unpatched flaws over time."],
+["Cloud clips kept 30 days or less; microphone off if unused","Medium","Data that is deleted cannot be exposed later."]]},
+{n:"Voice assistant",c:[
+["Voice commands cannot unlock the door or disable alarms","Critical","A spoken command, even from the TV, must never open the house."],
+["Unique password and multi-factor authentication on the account","Critical","The account holds voice history and linked services."],
+["Purchases need a PIN or are switched off","High","Prevents accidental or unauthorised orders."],
+["Update support period checked on the maker’s site","High","Support length varies a lot between models."],
+["Voice history set to auto-delete","Medium","Reduces the stored record of private conversations."],
+["Opted out of human review of recordings","Medium","Limits who may hear accidental recordings."],
+["Mute button used when the assistant is not needed","Medium","A physical mute is the most reliable microphone control."]]},
+{n:"Connected door lock",c:[
+["Keypad PIN is long and random (no birthdays or 1234)","Critical","The PIN is the front-door key to the house."],
+["Unique password and multi-factor authentication on the lock app","Critical","Account takeover can mean remote unlocking."],
+["Guest codes are temporary and old codes are deleted","High","Forgotten access lets former guests or workers in."],
+["Firmware is up to date","High","Lock flaws are physical-safety flaws."],
+["Mechanical key and spare batteries kept ready","High","A dead battery or outage must not lock the family out."],
+["Access log reviewed every month","Medium","Shows unknown users and when the house is empty."],
+["Auto-unlock or geofencing switched off if unreliable","Low","Avoids doors opening when nobody expects it."]]},
+{n:"Smart television",c:[
+["TV is on the guest or IoT network","High","Keeps a weak TV away from phones and laptops."],
+["Automatic updates on and update support checked","High","Smart TV software often loses support after a few years."],
+["Strong password and multi-factor authentication on the TV account","High","Protects the viewing profile and purchases."],
+["ACR and ad personalisation turned off","Medium","Stops the TV from profiling what the family watches."],
+["Camera and microphone disabled or covered if unused","Medium","Removes a hidden recording source."],
+["Unused apps removed","Low","Fewer apps means fewer data requests."],
+["Plan to factory reset and sign out before selling or recycling","Low","Old TVs keep accounts and Wi-Fi details."]]},
+{n:"Home network (covers all devices)",c:[
+["Strong Wi-Fi password with WPA3 or WPA2-AES","Critical","Every device depends on the Wi-Fi."],
+["Router admin password changed and router firmware updated","Critical","A weak router exposes the whole home."],
+["Separate guest or IoT network created","High","Limits damage if one device is compromised."],
+["WPS and UPnP turned off","Medium","Both can open the network without you noticing."]]}];
+var st=[];G.forEach(function(g){st.push(g.c.map(function(){return false}))});
+var gr=document.getElementById("groups");
+G.forEach(function(g,i){
+ var f=document.createElement("fieldset");var l=document.createElement("legend");l.textContent=g.n;f.appendChild(l);
+ g.c.forEach(function(c,j){
+  var lb=document.createElement("label");var cb=document.createElement("input");cb.type="checkbox";
+  cb.addEventListener("change",function(){st[i][j]=cb.checked;render()});
+  var d=document.createElement("div");
+  var t=document.createElement("span");t.className="t";t.textContent=c[0];
+  var ch=document.createElement("span");ch.className="chip "+c[1];ch.textContent=c[1];t.appendChild(ch);
+  var w=document.createElement("span");w.className="w";w.textContent=c[2];
+  d.appendChild(t);d.appendChild(w);lb.appendChild(cb);lb.appendChild(d);f.appendChild(lb);
+  c.cb=cb;
  });
- $("upd").textContent="Update the researcher at least every "+(sv==="Critical"?7:14)+" days. Disclosure target: "+STAGES[5].d(rc,sv)+" (about 90 days from receipt, or when the fix is released).";
- $("msg").value=msgFor();
-}
-["title","who","sev","recv","today"].forEach(function(i){$(i).addEventListener("input",render)});
-$("copy").addEventListener("click",function(){
- var m=$("msg");m.select();
- try{navigator.clipboard.writeText(m.value).then(function(){$("cp").textContent="Copied."},function(){document.execCommand("copy");$("cp").textContent="Copied."})}catch(e){try{document.execCommand("copy");$("cp").textContent="Copied."}catch(e2){$("cp").textContent="Select the text and copy it manually."}}
+ gr.appendChild(f);
 });
-function verdict(){
- var a=ACT[+$("act").value],v=$("verdict");
- v.className="v "+(a[1]?"ok":"no");v.textContent=a[1]?"Allowed":"Not allowed";
- $("reply").textContent="Suggested reply: "+a[2];
+function level(p){return p>=45?"High":p>=20?"Medium":"Low"}
+function render(){
+ var rows=document.getElementById("rows");rows.innerHTML="";var todo=[];var tot=0,met=0;
+ G.forEach(function(g,i){
+  var total=0,done=0;
+  g.c.forEach(function(c,j){var w=W[c[1]];total+=w;if(st[i][j])done+=w;else todo.push({w:w,t:c[0],d:g.n.split(" (")[0],p:c[1]})});
+  tot+=total;met+=done;
+  var unmet=100-Math.round(done/total*100);
+  var lv=level(unmet);var pct=Math.round(done/total*100);
+  var tr=document.createElement("tr");
+  var a=document.createElement("td");a.textContent=g.n.split(" (")[0];
+  var b=document.createElement("td");var bar=document.createElement("div");bar.className="bar";var ii=document.createElement("i");ii.style.width=pct+"%";bar.appendChild(ii);b.appendChild(bar);
+  var c3=document.createElement("td");var s=document.createElement("span");s.className="badge "+lv+"-r";s.textContent=lv;c3.appendChild(s);
+  tr.appendChild(a);tr.appendChild(b);tr.appendChild(c3);rows.appendChild(tr);
+ });
+ document.getElementById("overall").textContent="Overall: "+Math.round(met/tot*100)+"% of weighted protections in place.";
+ todo.sort(function(x,y){return y.w-x.w});
+ var ol=document.getElementById("todo");ol.innerHTML="";
+ if(!todo.length){var li=document.createElement("li");li.textContent="All protections are in place. Schedule a quarterly review.";ol.appendChild(li)}
+ todo.slice(0,6).forEach(function(x){var li=document.createElement("li");li.textContent=x.t+" ";var sm=document.createElement("small");sm.textContent="("+x.d+", "+x.p+")";li.appendChild(sm);ol.appendChild(li)});
 }
-$("act").addEventListener("change",verdict);
-verdict();render();
+document.getElementById("reset").addEventListener("click",function(){
+ G.forEach(function(g,i){g.c.forEach(function(c,j){st[i][j]=false;c.cb.checked=false})});render();
+});
+render();
 </script>
 </body>
 </html>
